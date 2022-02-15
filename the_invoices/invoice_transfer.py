@@ -19,6 +19,6 @@ def the_tranfers():
     for i in invoices:
 
         the_time = diferenca_dias(now, i.created)
-        if the_time < 5400:  # esse é o range de tempo de uma hora e meia. seja para frente ou que ja passou
-            # ( leva em consideração a diferença de fuso)
+        if the_time < 5400:  # this is the time range of one and a half hours. either forward or past
+            # (takes the time difference into account)
             trans(i.amount)

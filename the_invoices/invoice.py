@@ -3,10 +3,8 @@ import starkbank
 from random import randint
 from datetime import datetime, timedelta
 # inside
-from cpf import generate_cpf
-from name import name
-
-'''os invoices, funcionando no outro ( teste 3), verificar se funciona passar 1 por 1'''
+from data.cpf import generate_cpf
+from data.name import name
 from authentication import authe
 
 authe()

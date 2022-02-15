@@ -1,10 +1,13 @@
+# outside
 from time import sleep
 import authentication
-from invoice import invo
-from invoice_transfer import the_tranfers
+# inside
+from the_invoices.invoice import invo
+from the_invoices.invoice_transfer import the_tranfers
 
 
 def main():
+    # it was made with a work cycle, but it can be implemented with a datetime module. ex: difference_days function
     cicle = 8  # one day
     while cicle > 0:
         authentication.authe()
@@ -17,3 +20,14 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+"""
+
+TODO next implementation: the webhook will replace the inoives_transfer. making a more complete integration
+with the webhook.site
+
+from webhook import webhooksite
+
+webhooksite()
+
+"""
