@@ -1,3 +1,4 @@
+# outside
 import requests
 
 ''' pt-Br
@@ -15,6 +16,7 @@ class BearerAuth(requests.auth.AuthBase):
         r.headers["authorization"] = "Bearer " + self.token
         return r
 
+
 def generate_cpf():
     response = requests.get('https://gerador.app/api/cpf/generate',
                             auth=BearerAuth('CRHIT0EhJrBb72n6nWhB7goOOs3OUtOMouzcrEN0'))
@@ -23,4 +25,3 @@ def generate_cpf():
     new_cpf = response['number']
 
     return new_cpf
-

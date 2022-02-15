@@ -1,5 +1,7 @@
+# outside
 import starkbank
 from datetime import datetime
+# inside
 from transfer import trans
 
 invoices = starkbank.invoice.query()
@@ -11,6 +13,8 @@ def diferenca_dias(d1, d2):
 
 
 now = datetime.now()
+
+
 def the_tranfers():
     for i in invoices:
 

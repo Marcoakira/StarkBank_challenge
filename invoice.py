@@ -1,17 +1,20 @@
+# outside
 import starkbank
 from random import randint
 from datetime import datetime, timedelta
+# inside
 from cpf import generate_cpf
 from name import name
 
 '''os invoices, funcionando no outro ( teste 3), verificar se funciona passar 1 por 1'''
 from authentication import authe
+
 authe()
 
-
 invoices = []
-def invo():
 
+
+def invo():
     one_invoice = starkbank.invoice.create([
         starkbank.Invoice(
             amount=randint(1, 99999),  # ex: R$ 235,71
@@ -27,9 +30,10 @@ def invo():
     print(one_invoice)
 
     invoices.append(one_invoice)
+
+
 for i in range(randint(8, 12)):
     invo()
 
 for invoice in invoices:
     print(invoice)
-
