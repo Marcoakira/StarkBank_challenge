@@ -13,9 +13,7 @@ def authe():
     BgUrgQQACg==
     -----END EC PARAMETERS-----
     -----BEGIN EC PRIVATE KEY-----
-    MHQCAQEEIBddoo3ff5ZMCDmLopSUtfo/nHc9sVljhVwogst7d7FxoAcGBSuBBAAK
-    oUQDQgAE59J0+tzb6brJgkyE6NLZSdVINOJLDdpi9v20YOYSQ5E1fuPuQG9vZQYB
-    48yBbAfw/bSAKCjtvVrC70PwPxQ8wA==
+###########  INSIRA AQUI SUA KEY  #############
     -----END EC PRIVATE KEY-----
     
     """
