@@ -39,18 +39,6 @@ def event_webhoot():
                     # The event is excluded to not generate duplicates.
 
                     trans(event.log.invoice.amount)
-                    # transfers = starkbank.transfer.create([
-                    #     starkbank.Transfer(
-                    #         amount=event.log.invoice.amount,
-                    #         bank_code="20018183",  # TED
-                    #         branch_code="0001",
-                    #         account_number="6341320293482496",
-                    #         tax_id="20.018.183/0001-80",
-                    #         name="Stark Bank S.A.",
-                    #         tags=["payment"]
-                    #     )
-                    # ])
-                    # print(transfers)
 
                     event = starkbank.event.delete(event.id)
                     print(f"evento apagado {event}")
