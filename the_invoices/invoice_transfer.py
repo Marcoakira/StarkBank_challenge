@@ -1,3 +1,5 @@
+'''
+DESATIVADO, NÃO FAZ MAIS PARTE DA SOLUÇÃO, MANTIVE APENAS PARA COMPARAÇÃO.
 # outside
 import starkbank
 from datetime import datetime
@@ -22,3 +24,5 @@ def the_tranfers():
         if the_time < 5400:  # this is the time range of one and a half hours. either forward or past
             # (takes the time difference into account)
             trans(i.amount)
+
+'''
