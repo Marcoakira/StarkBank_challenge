@@ -1,49 +1,78 @@
+# outside
 import starkbank
+from datetime import timedelta, datetime
+# inside
+from transfer import trans
 
-'''
-https://adoteumdev.postman.co/workspace/My-Workspace~3c57eae0-6ad8-4611-8bad-7e493f990edc/collection/19595432-5ce26371-6201-4e28-bb02-bc39bc3ba6c9?ctx=documentation
-Foi uma forma extremamente facil de fazer que infelizmente descobri apenas nos ultimos minutos para a entrega.
-'''
-def webhooksite():
-    webhook = starkbank.webhook.create(
-        url="https://webhook.site/117b85f8-2b69-4325-8c54-0d0f5eb8f0c2?",
-        subscriptions=["invoice"],
-    )
+
+def event_webhoot():
+    webhook = starkbank.webhook.get("6247777038237696")
 
     print(webhook)
-    return webhook
 
-'''
+    yesterday = datetime.now() - timedelta(1)
+    yesterday.strftime('%d-%m-%Y')
 
-response = listen()  # this is the method you made to get the events posted to your webhook endpoint
+    events = starkbank.event.query(after=yesterday, is_delivered=True)
 
-event = starkbank.event.parse(
-    content=response.data.decode("utf-8"),
-    signature=response.headers["Digital-Signature"],
-)
+    def the_file():
+        with open("id_temp.txt", "a") as file:
+            file.write("\n")
+            file.write(event.log.invoice.id)
 
-if event.subscription == "transfer":
-    print(event.log.transfer)
+    for event in events:
+        print(event.subscription)
 
-elif event.subscription == "boleto":
-    print(event.log.boleto)
+        if event.subscription == "invoice":  # Some events may not be invoices
+            if "paid" in event.log.invoice.status:  # "expired # "created"
 
-elif event.subscription == "boleto-payment":
-    print(event.log.payment)
+                # Some events were generating duplicates in the Ids,
+                # so this temporary file was created for control.
+                # the same is deleted at the end of the session
+                with open("id_temp.txt", "r") as file:
+                    checando = file.read()
 
-elif event.subscription == "boleto-holmes":
-    print(event.log.holmes)
+                if event.log.invoice.id not in checando:
+                    the_file()
+                    print("tranferencia criada:\n")
+                    # Created the transfer, or the event not being an invoice.
+                    # The event is excluded to not generate duplicates.
 
-elif event.subscription == "brcode-payment":
-    print(event.log.payment)
+                    trans(event.log.invoice.amount)
+                    # transfers = starkbank.transfer.create([
+                    #     starkbank.Transfer(
+                    #         amount=event.log.invoice.amount,
+                    #         bank_code="20018183",  # TED
+                    #         branch_code="0001",
+                    #         account_number="6341320293482496",
+                    #         tax_id="20.018.183/0001-80",
+                    #         name="Stark Bank S.A.",
+                    #         tags=["payment"]
+                    #     )
+                    # ])
+                    # print(transfers)
 
-elif event.subscription == "utility-payment":
-    print(event.log.payment)
+                    event = starkbank.event.delete(event.id)
+                    print(f"evento apagado {event}")
 
-elif event.subscription == "deposit":
-    print(event.log.deposit)
+                else:
+                    starkbank.event.delete(event.id)  # Delete repeated events
 
-elif event.subscription == "invoice":
-    print(event.log.invoice)
+            elif "expired" in event.log.invoice.status:
+                print(f"This invoice nº {event.log.invoice.id} has expired")
 
-'''
+            elif "created" in event.log.invoice.status:
+
+                print(f"This invoice nº {event.log.invoice.id} Created but not yet paid")
+
+            else:
+
+                print(f"This invoice nº {event.log.invoice.id} was already paid before")
+
+        else:
+            print("This event was not an invoice and will be deleted")
+
+            event = starkbank.event.delete(event.id)
+
+    with open("id_temp.txt", 'w') as file:
+        pass
